@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct nota {
+    float valor;
+
+    // Ponteiro para a proxima nota
+    struct nota * next;
+};
+
+//Renomeia a struct para st_nota
+typedef struct nota st_nota;
+
+void adicionar(st_nota ** head, float dado);
+
+int main()
+{
+    //Ponteiro para o inicio da lista
+    st_nota * head = NULL;
+    int opc;
+    float nota;
+
+    do{
+    printf("Digite uma nota:\n");
+    scanf("%f", &nota);
+
+    adicionar(&head, nota);
+    imprimir(head);
+
+    printf("Deseja continuar, digite 999 para sair");
+    scanf("%i",&opc);
+    fflush(stdin);
+    }while(opc!=999);
+    return 0;
+}
+
+void adicionar(st_nota ** head, float dado)
+{
+    st_nota * nova_info = malloc(sizeof(st_nota));
+
+    nova_info  -> valor = dado;
+
+    //Inserção no inicio
+    nova_info->next = *head;
+    *head = nova_info;
+}
+
+void imprimir(st_nota * aux)
+{
+    while(aux != NULL){
+        printf("Valor: %.2f\n", aux->valor);
+        aux = aux->next;
+    }
+}
